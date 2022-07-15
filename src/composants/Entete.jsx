@@ -10,7 +10,7 @@ export default function Entete({utilisateur}) {
       <div className="utilisateur">
         {utilisateur.displayName} 
         <span onClick={deconnexion}>&nbsp;(deconnexion)</span>
-        <Avatar className="avatar" alt={utilisateur.displayName} src={utilisateur.photoUrl} />
+        <Avatar className="avatar" alt={utilisateur.displayName} src={utilisateur.photoURL} />
       </div>
     </header>
   );

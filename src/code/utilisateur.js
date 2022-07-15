@@ -10,7 +10,7 @@ export function observerEtatConnexion(mutateurEtatUtilisateur) {
     onAuthStateChanged(authFirebase, 
         util => {
             if(util) {
-                //sauvegarderProfil(util);
+                sauvegarderProfil(util);
             }
 
             mutateurEtatUtilisateur(util);
@@ -21,4 +21,16 @@ export function observerEtatConnexion(mutateurEtatUtilisateur) {
 
 export function deconnexion() {
     authFirebase.signOut();
+}
+
+function sauvegarderProfil(util) {
+    setDoc(
+        doc(bdFirestore, 'utilisateurs', util.uid),
+        {
+            nom: util.displayName,
+            courriel: util.email,
+            avatar: util.photoURL
+        }, 
+        {merge: true}
+    );
 }
