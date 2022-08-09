@@ -1,7 +1,7 @@
 import './ListeDossiers.scss';
 import Dossier from './Dossier';
 import { useEffect } from 'react';
-import * as dossiersModele from "../code/dossiers";
+import * as dossiersModele from "../code/dossier";
 
 export default function ListeDossiers({idUtilisateur, dossiers, setDossiers}) {
 
