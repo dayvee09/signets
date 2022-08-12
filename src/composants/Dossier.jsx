@@ -1,4 +1,5 @@
 import './Dossier.scss'; 
+import FrmDossier from './FrmDossier';
 import IconButton from '@mui/material/IconButton';
 import SortIcon from '@mui/icons-material/Sort';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -6,13 +7,30 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 
-export default function Dossier({id, titre, couleur, couverture, dateAjout}) {
+export default function Dossier({id, titre, couleur, couverture, dateAjout, supprimerDossier, modifierDossier}) {
   // État du menu contextuel de chaque dossier
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
 
+  // État du formulaire de modification
+  const [frmOuvert, setFrmOuvert] = useState(false);
+
   function gererMenuContextuel(evt) {
     setEltAncrage(evt.currentTarget);
+  }
+
+  function afficherFormulaireDossier() {
+    setFrmOuvert(true);
+    gererFermerMenuContextuel();
+  }
+
+  function gererFermerMenuContextuel() {
+    setEltAncrage(null);
+  }
+
+  function gererSupprimer() {
+    supprimerDossier(id);
+    gererFermerMenuContextuel();
   }
 
   return (
@@ -35,13 +53,23 @@ export default function Dossier({id, titre, couleur, couverture, dateAjout}) {
       <Menu
         open={menuContextuelOuvert}
         anchorEl={eltAncrage}
-        onClose={()=>setEltAncrage(null)}
+        onClose={gererFermerMenuContextuel}
         anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
         transformOrigin={{vertical: 'bottom', horizontal: 'right'}}
       >
-        <MenuItem>Modifier</MenuItem>
-        <MenuItem>Supprimer</MenuItem>
+        <MenuItem onClick={afficherFormulaireDossier}>Modifier</MenuItem>
+        <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
       </Menu>
+
+      <FrmDossier 
+        frmOuvert={frmOuvert} 
+        setFrmOuvert={setFrmOuvert} 
+        id={id} 
+        titre_p={titre} 
+        couleur_p={couleur} 
+        couverture_p={couverture} 
+        gererActionDossier={modifierDossier}
+      />
     </article>
   );
 }

@@ -7,10 +7,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { TwitterPicker } from "react-color";
 import { useState } from "react";
 
-export default function FormDialog({ frmOuvert, setFrmOuvert, gererActionDossier }) {
-	const [titre, setTitre] = useState('');
-	const [couverture, setCouverture] = useState('');
-	const [couleur, setCouleur] = useState('#000');
+export default function FrmDossier({ id=null, titre_p='', couverture_p='', couleur_p='#000', frmOuvert, setFrmOuvert, gererActionDossier }) {
+	const [titre, setTitre] = useState(titre_p);
+	const [couverture, setCouverture] = useState(couverture_p);
+	const [couleur, setCouleur] = useState(couleur_p);
 	
 
 	function gererSoumettre() {

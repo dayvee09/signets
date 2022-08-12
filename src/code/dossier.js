@@ -1,5 +1,5 @@
 import { bdFirestore } from "./init";
-import { getDocs, query, collection, orderBy, addDoc, getDoc, Timestamp } from "firebase/firestore";
+import { getDocs, query, collection, orderBy, addDoc, getDoc, Timestamp, doc, deleteDoc, updateDoc } from "firebase/firestore";
 
 // Read
 export async function lireTout(idUtilisateur) {
@@ -15,4 +15,16 @@ export async function creer(idUtilisateur, infoDossier) {
     infoDossier.dateAjout = Timestamp.now();
     let refDoc = await addDoc(collection(bdFirestore, 'utilisateurs', idUtilisateur, 'dossiers'), infoDossier);
     return await getDoc(refDoc);
+}
+
+// Delete
+export async function supprimer(idUtilisateur, idDossier) {
+    let refDoc = doc(bdFirestore, 'utilisateurs', idUtilisateur, 'dossiers', idDossier);
+    return await deleteDoc(refDoc);
+}
+
+// Update
+export async function modifier(idUtilisateur, idDossier, objModif) {
+    let refDoc = doc(bdFirestore, 'utilisateurs', idUtilisateur, 'dossiers', idDossier);
+    return await updateDoc(refDoc, objModif);
 }
