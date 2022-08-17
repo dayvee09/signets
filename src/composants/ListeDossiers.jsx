@@ -5,14 +5,16 @@ import * as dossiersModele from "../code/dossier";
 
 export default function ListeDossiers({idUtilisateur, dossiers, setDossiers}) {
 
-  useEffect(() =>
-    () => dossiersModele.lireTout(idUtilisateur).then(
-      dossiersFS => {
-        setDossiers(dossiersFS);
-        console.log('Dossiers retournés par Firestore : ', dossiersFS);
-      }
-    )
-  , []);
+  useEffect(
+    () => {
+      dossiersModele.lireTout(idUtilisateur).then(
+        dossiersFS => {
+          setDossiers(dossiersFS);
+          console.log('Dossiers retournés par Firestore : ', dossiersFS);
+        }
+      )
+    }
+  , [idUtilisateur, setDossiers]); 
 
   function supprimerDossier(idDossier) {
     dossiersModele.supprimer(idUtilisateur, idDossier).then(
@@ -22,12 +24,14 @@ export default function ListeDossiers({idUtilisateur, dossiers, setDossiers}) {
     );
   }
 
-  function modifierDossier(idDossier, nvTitre, nvCouverture, nvCouleur) {
+  function modifierDossier(nvTitre, nvCouverture, nvCouleur, idDossier) {
     const objetNouvellesValeursDossier = {
       titre: nvTitre,
       couverture: nvCouverture,
       couleur: nvCouleur
     }
+
+    console.log('Objet Modif : ', objetNouvellesValeursDossier);
 
     dossiersModele.modifier(idUtilisateur, idDossier, objetNouvellesValeursDossier).then(
       () => setDossiers(dossiers.map(
